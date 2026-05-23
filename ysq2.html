@@ -1,0 +1,698 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes"
+    />
+    <title>余思琪的专属心动小站</title>
+    <!-- Google Fonts 圆润字体 -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Quicksand:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome 6 (免费图标库，生动小元素) -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family:
+          "Quicksand",
+          "Inter",
+          system-ui,
+          -apple-system,
+          "Segoe UI",
+          sans-serif;
+        background: linear-gradient(145deg, #fff5f0 0%, #ffe6e9 100%);
+        min-height: 100vh;
+        padding: 2rem 1.5rem;
+        position: relative;
+        color: #4a2e2a;
+      }
+
+      /* 可爱浮动小花瓣/郁金香氛围 */
+      body::before {
+        content: "🌷🌷🌷";
+        position: fixed;
+        bottom: 10px;
+        left: 0;
+        font-size: 40px;
+        opacity: 0.1;
+        pointer-events: none;
+        white-space: pre;
+        transform: rotate(-5deg);
+        width: 100%;
+        text-align: center;
+        letter-spacing: 20px;
+      }
+
+      /* 主容器 */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 2;
+      }
+
+      /* 玻璃卡片通用样式 */
+      .card {
+        background: rgba(255, 248, 245, 0.85);
+        backdrop-filter: blur(2px);
+        border-radius: 48px;
+        box-shadow:
+          0 20px 35px -12px rgba(0, 0, 0, 0.12),
+          0 0 0 1px rgba(255, 255, 255, 0.6) inset;
+        padding: 1.8rem 2rem;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(255, 215, 200, 0.7);
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 30px 40px -18px rgba(230, 120, 100, 0.2);
+        background: rgba(255, 252, 245, 0.92);
+      }
+
+      /* 头部浪漫区 */
+      .hero {
+        text-align: center;
+        margin-bottom: 2.5rem;
+        animation: fadeInUp 0.8s ease-out;
+      }
+
+      .hero h1 {
+        font-size: 3rem;
+        background: linear-gradient(135deg, #e66767, #c45a5a, #f3a683);
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        display: inline-block;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.5px;
+      }
+
+      .hero .sub {
+        font-size: 1.3rem;
+        font-weight: 500;
+        color: #b95f5a;
+        background: rgba(255, 235, 225, 0.7);
+        display: inline-block;
+        padding: 0.3rem 1.2rem;
+        border-radius: 60px;
+        backdrop-filter: blur(4px);
+      }
+
+      .couple-name {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-top: 1rem;
+        color: #b34e48;
+      }
+
+      .couple-name span {
+        background: #fff0ea;
+        padding: 0.2rem 1rem;
+        border-radius: 100px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+      }
+
+      .heart-icon {
+        color: #ff6b6b;
+        animation: pulse 1.6s infinite;
+        font-size: 2rem;
+      }
+
+      /* 天数计数器 */
+      .days-counter {
+        background: #ffe0d4;
+        border-radius: 80px;
+        display: inline-flex;
+        align-items: baseline;
+        gap: 0.5rem;
+        padding: 0.6rem 1.6rem;
+        margin-top: 1rem;
+        font-weight: 600;
+        font-size: 1.2rem;
+      }
+      .days-number {
+        font-size: 2.2rem;
+        font-weight: 800;
+        color: #d64b2c;
+        font-family: monospace;
+        letter-spacing: 2px;
+      }
+
+      /* 网格布局 三列图片区 与 星座二维码区 */
+      .grid-3 {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+        gap: 2rem;
+        margin: 2rem 0;
+      }
+
+      .love-item {
+        text-align: center;
+        transition: all 0.2s;
+      }
+
+      .img-placeholder {
+        background: #fbe9e4;
+        border-radius: 42px;
+        aspect-ratio: 1 / 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+        transition: all 0.2s;
+        border: 2px dashed #f3bfaa;
+        overflow: hidden;
+        position: relative;
+        box-shadow: 0 12px 18px -12px rgba(0, 0, 0, 0.1);
+      }
+      /* 用户自定义图片区域：图片充满容器 */
+      .img-placeholder img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      /* 占位文本样式 (未放图片时显示) */
+      .img-placeholder .placeholder-icon {
+        font-size: 3.8rem;
+        color: #d9a288;
+        margin-bottom: 12px;
+      }
+      .img-placeholder .placeholder-text {
+        font-size: 0.85rem;
+        color: #b2806b;
+        background: rgba(255, 240, 235, 0.8);
+        padding: 4px 12px;
+        border-radius: 30px;
+      }
+
+      .love-item h3 {
+        font-size: 1.5rem;
+        margin: 0.5rem 0 0.2rem;
+        color: #b6594a;
+      }
+      .love-item p {
+        color: #986b5c;
+        font-weight: 500;
+      }
+
+      /* 双栏信息区: 生日星座 + 二维码专区 */
+      .info-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        margin: 2rem 0;
+      }
+      .birth-card {
+        background: linear-gradient(125deg, #fff3ed, #ffe7e0);
+        border-radius: 40px;
+        padding: 1.6rem;
+        text-align: center;
+      }
+      .zodiac {
+        font-size: 2rem;
+        margin-bottom: 0.2rem;
+      }
+      .both-zodiac {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        gap: 1.2rem;
+        margin: 0.8rem 0 1rem;
+      }
+      .zodiac-item {
+        background: rgba(255, 240, 235, 0.8);
+        border-radius: 60px;
+        padding: 0.4rem 1rem;
+        min-width: 130px;
+      }
+      .zodiac-item .sign {
+        font-size: 1.8rem;
+        font-weight: bold;
+      }
+      .zodiac-item .desc {
+        font-size: 0.8rem;
+        color: #aa6d58;
+      }
+      .birth-card h2 {
+        font-size: 1.6rem;
+        color: #c0634b;
+        margin-top: 0.5rem;
+      }
+      .lunar-birth {
+        background: white;
+        display: inline-block;
+        padding: 0.3rem 1.2rem;
+        border-radius: 60px;
+        font-weight: 700;
+        margin: 0.8rem 0;
+        font-size: 1.1rem;
+      }
+      .quote {
+        font-style: italic;
+        margin-top: 0.8rem;
+        color: #c2826b;
+      }
+      .compatibility {
+        background: #ffded0;
+        border-radius: 30px;
+        padding: 8px 12px;
+        font-size: 0.85rem;
+        margin-top: 12px;
+        font-weight: 500;
+      }
+
+      /* 二维码预留区域 */
+      .qr-area {
+        background: #fffaf5;
+        border-radius: 40px;
+        padding: 1.6rem;
+        text-align: center;
+        border: 2px solid #ffcfbc;
+        transition: all 0.2s;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      .qr-placeholder-box {
+        background: #f5e2d9;
+        width: 180px;
+        height: 180px;
+        margin: 0.5rem auto;
+        border-radius: 28px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition: all 0.2s;
+        border: 2px dashed #d6a68b;
+        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.05);
+      }
+      .qr-placeholder-box i {
+        font-size: 3rem;
+        color: #d99678;
+      }
+      .qr-placeholder-box span {
+        font-size: 0.85rem;
+        background: #ffe1d4;
+        padding: 4px 10px;
+        border-radius: 50px;
+        color: #ac6f56;
+        font-weight: 600;
+      }
+      .qr-tip {
+        font-size: 0.8rem;
+        margin-top: 12px;
+        color: #b2755d;
+        font-weight: 500;
+      }
+
+      /* 情书段落 */
+      .love-letter {
+        margin: 2rem 0 2rem;
+        text-align: center;
+        background: rgba(255, 245, 235, 0.7);
+        border-radius: 60px;
+        padding: 1.5rem;
+        font-size: 1.1rem;
+        border: 1px solid #ffdad0;
+        backdrop-filter: blur(2px);
+      }
+      .signature {
+        margin-top: 1rem;
+        font-weight: 700;
+        font-size: 1.2rem;
+        color: #c4654b;
+      }
+
+      /* 脚注 */
+      .footer {
+        text-align: center;
+        margin-top: 2.5rem;
+        font-size: 0.8rem;
+        opacity: 0.7;
+        border-top: 1px solid #ffccbc;
+        padding-top: 1.5rem;
+      }
+
+      /* 飘动动画 */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+          opacity: 0.8;
+        }
+        50% {
+          transform: scale(1.2);
+          opacity: 1;
+        }
+        100% {
+          transform: scale(1);
+          opacity: 0.8;
+        }
+      }
+
+      /* 手机优化 */
+      @media (max-width: 680px) {
+        body {
+          padding: 1rem;
+        }
+        .card {
+          padding: 1.2rem;
+        }
+        .hero h1 {
+          font-size: 2.2rem;
+        }
+        .couple-name {
+          font-size: 1.2rem;
+        }
+        .info-row {
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+        }
+        .grid-3 {
+          gap: 1rem;
+        }
+        .days-number {
+          font-size: 1.7rem;
+        }
+        .both-zodiac {
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+
+      /* 小动画点缀 */
+      .floating-heart {
+        position: fixed;
+        bottom: 10px;
+        right: 15px;
+        font-size: 28px;
+        opacity: 0.5;
+        pointer-events: none;
+        animation: floatHeart 3s infinite ease-in-out;
+        z-index: 99;
+      }
+      @keyframes floatHeart {
+        0% {
+          transform: translateY(0px) rotate(0deg);
+          opacity: 0.5;
+        }
+        50% {
+          transform: translateY(-12px) rotate(5deg);
+          opacity: 0.8;
+        }
+        100% {
+          transform: translateY(0px) rotate(0deg);
+          opacity: 0.5;
+        }
+      }
+
+      /* 白熊、蜡笔小新小彩蛋 */
+      .hover-giggle {
+        transition: transform 0.2s;
+      }
+      .hover-giggle:hover {
+        transform: scale(1.02);
+      }
+      button,
+      a {
+        cursor: default;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- 主视觉区 -->
+      <div class="hero card">
+        <h1>🌷 余思琪 专属星球 🌷</h1>
+        <div class="couple-name">
+          <span>张龙威</span>
+          <i class="fas fa-heart heart-icon"></i>
+          <span>余思琪</span>
+        </div>
+        <div class="sub">
+          🧸 在一起的第 <span id="loveDays" class="days-number">---</span> 天 🧸
+        </div>
+        <div class="days-counter">
+          <i class="fas fa-calendar-alt"></i> 纪念日：2026年3月3日
+        </div>
+      </div>
+
+      <!-- 喜欢的事物 图片区域：蜡笔小新、白熊、郁金香 (用户自加图片) -->
+      <div class="grid-3">
+        <!-- 蜡笔小新 区块 -->
+        <div class="love-item card hover-giggle">
+          <div class="img-placeholder" id="shinchanImgBox">
+            <!-- 用户可以替换下方 img 的 src 为自己的蜡笔小新图片 -->
+            <img
+              id="shinchanImg"
+              src="2c2251ee3094286fb9a6857cabed4420.jpg"
+              alt="蜡笔小新图片区域"
+              style="width: 100%; height: 100%; object-fit: cover"
+            />
+          </div>
+          <h3><i class="fas fa-smile-wink"></i> 蜡笔小新</h3>
+          <p>元气满满，像你一样可爱！</p>
+        </div>
+        <!-- 咱们裸熊·白熊 区块 -->
+        <div class="love-item card hover-giggle">
+          <div class="img-placeholder" id="whitebearImgBox">
+            <img
+              id="whitebearImg"
+              src="be55ca26040add37b05e82639281cdc8.jpg"
+              alt="咱们裸熊白熊图片区域"
+              style="width: 100%; height: 100%; object-fit: cover"
+            />
+          </div>
+          <h3><i class="fas fa-paw"></i> 白熊</h3>
+          <p>温柔白熊，治愈系男友力max</p>
+        </div>
+        <!-- 郁金香 区块 -->
+        <div class="love-item card hover-giggle">
+          <div class="img-placeholder" id="tulipImgBox">
+            <img
+              id="tulipImg"
+              src="44715e83f74918b78e2a208a8ad3ac8b.jpg"
+              alt="郁金香图片区域"
+              style="width: 94%; height: 100%; object-fit: cover"
+            />
+          </div>
+          <h3><i class="fas fa-leaf"></i> 牛逼二人组</h3>
+          <p>就俩字，牛逼</p>
+        </div>
+      </div>
+
+      <!-- 生日星座信息 + 二维码预留区域（升级双方星座展示） -->
+      <div class="info-row">
+        <!-- 左侧星座生日卡片，现在包含余思琪(巨蟹) + 张龙威(白羊) -->
+        <div class="birth-card card">
+          <div class="both-zodiac">
+            <div class="zodiac-item">
+              <div class="sign">♋️ 余思琪 · 巨蟹座</div>
+              <div class="desc">温柔似水 · 恋家 · 艺术直觉</div>
+            </div>
+            <div class="zodiac-item">
+              <div class="sign">♈️ 张龙威 · 白羊座</div>
+              <div class="desc">勇敢炽热 · 赤诚 · 守护骑士</div>
+            </div>
+          </div>
+          <h2>💘 巨蟹 & 白羊 · 星语心愿 💘</h2>
+          <div class="lunar-birth">🌙 余思琪 · 农历五月三十 🎂 16岁</div>
+          <p>
+            <i class="fas fa-star"></i>
+            巨蟹的细腻包容白羊的热情，白羊的坚定拥抱巨蟹的敏感
+            <i class="fas fa-star"></i>
+          </p>
+          <div class="quote">“你是我的软肋与铠甲，白杨与月光。”</div>
+          <div class="compatibility">
+            ✨ 白羊+巨蟹组合：火象与水象的奇妙化学反应，<br />
+            互补满分，爱意永不熄灭 ✨
+          </div>
+        </div>
+
+        <!-- 右侧二维码预留区 (用户可放任意二维码) -->
+        <div class="qr-area card">
+          <i class="fas fa-qrcode" style="font-size: 2rem; color: #b97f66"></i>
+          <h3 style="margin: 8px 0 4px">✨ 专属二维码位置 ✨</h3>
+          <p style="font-size: 0.85rem"></p>
+          <!-- 此处为二维码预留容器，用户可轻松替换内部 img 或自定义内容 -->
+          <div id="qrSlot" class="qr-placeholder-box">
+            <div style="height: 100px; width: 20px; padding: 10px"></div>
+            <img
+              src="60a6c9365752e2a8552ce0cb26a7e2bc.jpg"
+              style="width: 90%; height: 90%; object-fit: over"
+            />
+            <span>📌 二维码位置</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 浪漫情书区 + 爱的宣言 -->
+      <div class="love-letter card">
+        <i
+          class="fas fa-feather-alt"
+          style="font-size: 1.6rem; color: #c46b52"
+        ></i>
+        <p style="margin: 1rem 0; font-weight: 500; line-height: 1.5">
+          🌷 亲爱的思琪，从2026年3月3日那天起，我的世界被你点亮。<br />
+          你是我的挚爱，我的唯一，我愿意陪你走到最后。<br />
+          我张龙威，会用一生的热烈与真诚守护你，陪你度过每一个农历五月三十，送你无数朵郁金香。<br />
+          🧸 选择你，我是不会后悔的 🧸
+        </p>
+        <div class="signature">—— 永远爱你的 白羊座骑士 · 张龙威</div>
+      </div>
+
+      <!-- 小彩蛋/附加可爱文案 -->
+      <div class="footer">
+        <i class="fas fa-heart" style="color: #ee7f6b"></i> 每一天都是热恋 ·
+        给思琪的心意小站 <i class="fas fa-heart" style="color: #ee7f6b"></i
+        ><br />
+      </div>
+    </div>
+    <div class="floating-heart">
+      <i class="fas fa-heart" style="color: #ffaa99"></i>
+    </div>
+
+    <script>
+      // 计算在一起天数 (始于2026年3月3日)
+      function calculateDaysTogether() {
+        const startDate = new Date(2026, 2, 3); // 注意月份 2 代表三月
+        const today = new Date();
+        startDate.setHours(0, 0, 0, 0);
+        today.setHours(0, 0, 0, 0);
+        const timeDiff = today - startDate;
+        const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+        return days + 1;
+      }
+
+      function updateDays() {
+        const daysSpan = document.getElementById("loveDays");
+        if (daysSpan) {
+          const days = calculateDaysTogether();
+          daysSpan.innerText = days;
+        }
+      }
+      updateDays();
+
+      console.log(
+        "💌 张龙威(白羊座) ❤️ 余思琪(巨蟹座) | 浪漫小站已加载！\n你可以：\n1. 替换蜡笔小新/白熊/郁金香的图片src属性\n2. 在二维码区域 #qrSlot 内放置你的二维码图片\n3. 所有星座信息已加入，爱意满满~",
+      );
+
+      // 为图片区域提供一些点缀hover提示，增强生动感
+      const imgContainers = document.querySelectorAll(".img-placeholder");
+      imgContainers.forEach((container) => {
+        container.addEventListener("mouseenter", () => {
+          container.style.border = "2px solid #ffaa88";
+          container.style.transition = "0.2s";
+        });
+        container.addEventListener("mouseleave", () => {
+          container.style.border = "2px dashed #f3bfaa";
+        });
+      });
+
+      // 二维码区域高亮交互，提醒预留位置
+      const qrZone = document.getElementById("qrSlot");
+      if (qrZone) {
+        qrZone.addEventListener("mouseenter", () => {
+          qrZone.style.backgroundColor = "#ffe0d4";
+          qrZone.style.border = "2px solid #e6a88a";
+        });
+        qrZone.addEventListener("mouseleave", () => {
+          qrZone.style.backgroundColor = "#f5e2d9";
+          qrZone.style.border = "2px dashed #d6a68b";
+        });
+      }
+
+      // 根据月份提示农历五月三十（巨蟹月浪漫提醒）
+      const today = new Date();
+      const month = today.getMonth() + 1;
+      const day = today.getDate();
+      if (month === 7 && day >= 10 && day <= 20) {
+        const tipDiv = document.createElement("div");
+        tipDiv.style.position = "fixed";
+        tipDiv.style.bottom = "20px";
+        tipDiv.style.left = "20px";
+        tipDiv.style.background = "#ffefe5";
+        tipDiv.style.padding = "6px 14px";
+        tipDiv.style.borderRadius = "40px";
+        tipDiv.style.fontSize = "13px";
+        tipDiv.style.fontWeight = "bold";
+        tipDiv.style.boxShadow = "0 2px 10px rgba(0,0,0,0.1)";
+        tipDiv.style.zIndex = "999";
+        tipDiv.innerHTML =
+          "🎂 思琪的农历生日快到啦！ 张龙威提前祝宝贝生日快乐 🎂";
+        document.body.appendChild(tipDiv);
+      } else if (month === 6 && day > 20) {
+        const preTip = document.createElement("div");
+        preTip.style.position = "fixed";
+        preTip.style.bottom = "20px";
+        preTip.style.left = "20px";
+        preTip.style.background = "#fff0e3";
+        preTip.style.padding = "6px 14px";
+        preTip.style.borderRadius = "40px";
+        preTip.style.fontSize = "13px";
+        preTip.style.fontWeight = "bold";
+        preTip.innerHTML = "🌙 巨蟹月即将来临，期待思琪公主的生日月 🌙";
+        document.body.appendChild(preTip);
+      }
+
+      // 额外白羊座小彩蛋：鼠标点击心形出现火花效果（可选，增加生动性）
+      const floatingHeart = document.querySelector(".floating-heart");
+      if (floatingHeart) {
+        floatingHeart.addEventListener("click", () => {
+          const burst = document.createElement("div");
+          burst.innerText = "♈️🔥";
+          burst.style.position = "fixed";
+          burst.style.bottom = "40px";
+          burst.style.right = "30px";
+          burst.style.fontSize = "1.8rem";
+          burst.style.opacity = "0.8";
+          burst.style.pointerEvents = "none";
+          burst.style.zIndex = "9999";
+          burst.style.transition = "all 0.6s ease-out";
+          document.body.appendChild(burst);
+          setTimeout(() => {
+            burst.style.opacity = "0";
+            burst.style.transform = "translateY(-30px)";
+            setTimeout(() => burst.remove(), 700);
+          }, 10);
+        });
+      }
+    </script>
+
+    <!-- 简易图片替换教程（浮窗注释） -->
+    <div style="display: none">
+      图片替换方法：img标签src属性换成你的图片地址即可。二维码位置同理，在#qrSlot里放入img或自定义代码。
+    </div>
+  </body>
+</html>
